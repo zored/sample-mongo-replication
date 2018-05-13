@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-set -e
+set -e # - exit on error.
 
-# Fill machine names:
 MACHINES=4
 MACHINE_PREFIX='mongo-'
 MACHINE_CONFIG='\
@@ -10,14 +9,17 @@ MACHINE_CONFIG='\
 	--virtualbox-disk-size 8192 \
 	--virtualbox-memory 1024
 '
+CONTAINER=mongo
+REPLICA_SET_NAME=rs0
+
+# Fill machine names:
 MACHINE_NAMES=()
 for i in $(seq 1 $MACHINES); do
 	MACHINE_NAMES[$i]=${MACHINE_PREFIX}$i
 done
 MACHINE=${MACHINE_NAMES[1]}
-CONTAINER=mongo
-REPLICA_SET_NAME=rs0
 
+# Log function:
 log () {
 	type=$1
 	shift
@@ -138,7 +140,7 @@ case $1 in
 				--workdir //app \
 				--name php-cli \
 				php:7.2.5-cli \
-					bin/create-dump.php
+					bin/create-dump.php $DUMP_LOCAL
 		fi
 
 		log info "Sending dump to $CONTAINER $DUMP_LOCAL -> $DUMP_REMOTE"

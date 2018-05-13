@@ -1,10 +1,6 @@
 # Sample MongoDB replication
-- Runs replica set on your development machine.
-- Fills it with users.
-- Simple as:
-	```bash
-	make run
-	```
+- Run replica set and fill it with users: `make run`.
+- Neither secure or production ready.
 
 ## Coming soon
 Sharding.

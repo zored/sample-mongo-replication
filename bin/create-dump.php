@@ -1,16 +1,22 @@
 #!/usr/bin/env php
 <?php
+// This scripts creates dump with huge amount of users.
 
-const DUMP = './data/dump.js';
-const USERS = 1000000;
-const CHUNK_SIZE = 100;
-echo 'Will create dump: ' . DUMP . PHP_EOL;
-if (file_exists(DUMP)) {
-	echo 'Dump already exists.' . PHP_EOL;
-	return;
+$path = $argv[1] ?? null;
+if (empty($path)) {
+	echo 'First argument must be dump path.';
+	exit 1;
 }
 
-$file = fopen(DUMP, 'w');
+const USERS = 1000000;
+const CHUNK_SIZE = 100;
+echo 'Will create dump: ' . $path . PHP_EOL;
+if (file_exists($path)) {
+	echo 'Dump already exists.' . PHP_EOL;
+	exit 0;
+}
+
+$file = fopen($path, 'w');
 fwrite($file, <<<JS
 use test;
 db.createCollection("user");
